@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐍 Wolvesville Clan Quests</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+    body {
+      background: #05030a;
+      background-image:
+        linear-gradient(rgba(40, 10, 80, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(40, 10, 80, 0.15) 1px, transparent 1px),
+        radial-gradient(ellipse at 50% 0%, #0e0820 0%, #05030a 70%);
+      background-size: 40px 40px, 40px 40px, 100% 100%;
+      color: #ece6ff;
+      min-height: 100vh;
+      font-size: 1.1rem;
+      font-family: 'Rajdhani', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6, .stat-value, .badge, .btn, .form-label {
+      font-family: 'Orbitron', sans-serif;
+    }
+    .container {
+      max-width: 1400px;
+    }
+    .card {
+      background: linear-gradient(145deg, #0f0a1a, #0a0812);
+      border: 1px solid #2a1a5a;
+      box-shadow: 0 0 20px rgba(40, 10, 80, 0.4), inset 0 0 30px rgba(20, 5, 40, 0.3);
+      transition: box-shadow 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 0 35px rgba(60, 15, 120, 0.35), inset 0 0 30px rgba(20, 5, 40, 0.3);
+    }
+    .card-header {
+      background: linear-gradient(90deg, #0a0815, #0e0a1f);
+      border-bottom: 1px solid #2a1a5a;
+      color: #b8a8f0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .card-body {
+      padding: 1.75rem;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #4a1a9a, #7a2af0);
+      border-color: #8a3aff;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      transition: all 0.2s;
+      box-shadow: 0 0 12px rgba(122, 42, 240, 0.35);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #7a2af0, #9a50ff);
+      border-color: #aa60ff;
+      box-shadow: 0 0 28px rgba(122, 42, 240, 0.6);
+      transform: translateY(-2px);
+    }
+    .btn-primary:disabled {
+      background: #1a1030;
+      border-color: #2a1a4a;
+      box-shadow: none;
+    }
+    .btn-outline-secondary {
+      color: #a080e8;
+      border-color: #4a1a9a;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-outline-secondary:hover {
+      color: #05030a;
+      background: #a080e8;
+      border-color: #a080e8;
+      box-shadow: 0 0 20px rgba(160, 128, 232, 0.4);
+    }
+    .btn-outline-danger {
+      transition: all 0.2s;
+    }
+    .btn-outline-danger:hover {
+      box-shadow: 0 0 18px rgba(255, 80, 80, 0.45);
+    }
+    .form-control, .form-select {
+      background: #0a0812;
+      border: 1px solid #2a1a5a;
+      color: #d0c8f0;
+      transition: all 0.2s;
+    }
+    .form-control:focus, .form-select:focus {
+      background: #0f0a1a;
+      border-color: #8a3aff;
+      color: #d0c8f0;
+      box-shadow: 0 0 0 0.2rem rgba(122, 42, 240, 0.25), 0 0 16px rgba(122, 42, 240, 0.15);
+    }
+    .form-control::placeholder {
+      color: #d0c8f0 !important;
+    }
+    .form-label {
+      color: #ece6ff;
+    }
+    .form-select {
+      cursor: pointer;
+    }
+    .list-group-item {
+      background: linear-gradient(135deg, #0f0a1a, #0a0812);
+      border: 1px solid #1a1040;
+      color: #ece6ff;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 4px;
+      border-radius: 8px !important;
+    }
+    .list-group-item:hover {
+      background: linear-gradient(135deg, #180f30, #140c28);
+      border-color: #7a2af0;
+      color: #f0ecff;
+      box-shadow: 0 0 16px rgba(122, 42, 240, 0.25);
+      transform: translateX(4px);
+    }
+    .list-group-item.active {
+      background: linear-gradient(135deg, #180f30, #1f0f40);
+      border-color: #8a3aff;
+      box-shadow: 0 0 20px rgba(122, 42, 240, 0.35);
+    }
+    .progress {
+      background: #05030a;
+      height: 2.4rem;
+      border-radius: 0.75rem;
+      border: 1px solid #2a1a5a;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+    .progress-bar {
+      background: linear-gradient(90deg, #4a1a9a, #7a2af0, #20b0e0, #40d0f0);
+      background-size: 300% 100%;
+      animation: shimmer 2.5s ease-in-out infinite;
+      transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-radius: 0.75rem;
+      position: relative;
+    }
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 0.75rem;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 0%; }
+      50% { background-position: 100% 0%; }
+    }
+    .progress-bar.gold {
+      background: linear-gradient(90deg, #4a1a9a, #7a2af0, #20b0e0, #40d0f0, #20b0e0);
+      background-size: 300% 100%;
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+    .progress-bar.gem {
+      background: linear-gradient(90deg, #4a1a9a, #7a2af0, #ff30a0, #ff40d0, #c040ff);
+      background-size: 300% 100%;
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+    .badge-gold {
+      background: linear-gradient(135deg, #20b0e0, #50d0f0);
+      color: #000;
+      box-shadow: 0 0 14px rgba(32, 176, 224, 0.5);
+    }
+    .badge-gem {
+      background: linear-gradient(135deg, #ff30a0, #c040ff);
+      color: #fff;
+      box-shadow: 0 0 14px rgba(255, 48, 160, 0.5);
+    }
+    .stat-box {
+      background: linear-gradient(145deg, #0f0a1a, #0a0812);
+      border: 1px solid #2a1a5a;
+      border-radius: 1rem;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 0 16px rgba(30, 10, 60, 0.35), inset 0 0 25px rgba(15, 5, 30, 0.2);
+      transition: all 0.3s;
+    }
+    .stat-box:hover {
+      border-color: #5a1aba;
+      box-shadow: 0 0 30px rgba(50, 15, 100, 0.4), inset 0 0 25px rgba(15, 5, 30, 0.2);
+    }
+    .stat-value {
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #f0ecff;
+      text-shadow: 0 0 14px rgba(122, 42, 240, 0.4);
+      letter-spacing: 0.02em;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: #b0a8e0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
+    .tier-circle {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.2rem;
+      border: 3px solid #3a2a6a;
+      background: #0a0812;
+      color: #a8a0d0;
+      transition: all 0.3s;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: none;
+    }
+    .tier-circle.completed {
+      border-color: #7a2af0;
+      background: linear-gradient(135deg, #180f30, #1f0f40);
+      color: #c0a0ff;
+      box-shadow: 0 0 14px rgba(122, 42, 240, 0.35);
+    }
+    .tier-circle.current {
+      border-color: #20b0e0;
+      background: linear-gradient(135deg, #20b0e0, #60d0f0);
+      color: #000;
+      box-shadow: 0 0 28px rgba(32, 176, 224, 0.7), 0 0 60px rgba(32, 176, 224, 0.25);
+      transform: scale(1.12);
+    }
+    .tier-circle.gold.completed {
+      border-color: #7a2af0;
+      background: linear-gradient(135deg, #180f30, #1f0f40);
+      color: #c0a0ff;
+      box-shadow: 0 0 14px rgba(122, 42, 240, 0.35);
+    }
+    .tier-circle.gold.current {
+      border-color: #20b0e0;
+      background: linear-gradient(135deg, #20b0e0, #60d0f0);
+      color: #000;
+      box-shadow: 0 0 28px rgba(32, 176, 224, 0.7), 0 0 60px rgba(32, 176, 224, 0.25);
+      transform: scale(1.12);
+    }
+    .tier-circle.gem.completed {
+      border-color: #ff30a0;
+      background: linear-gradient(135deg, #180018, #200030);
+      color: #f0a0e0;
+      box-shadow: 0 0 14px rgba(255, 48, 160, 0.35);
+    }
+    .tier-circle.gem.current {
+      border-color: #ff30a0;
+      background: linear-gradient(135deg, #ff30a0, #c040ff);
+      color: #fff;
+      box-shadow: 0 0 28px rgba(255, 48, 160, 0.7), 0 0 60px rgba(255, 48, 160, 0.25);
+      transform: scale(1.12);
+    }
+    .participant-avatar {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #180f30, #1f0f40);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #b0a8e0;
+      flex-shrink: 0;
+    }
+    .api-key-input {
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+    }
+    #errorAlert {
+      display: none;
+      border-left: 4px solid #ff4040;
+    }
+    .badge-quest-type {
+      font-size: 1rem;
+      padding: 0.5em 0.8em;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    #loadingOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(5, 3, 10, 0.94);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+    #loadingOverlay.show {
+      display: flex;
+    }
+    .spinner-border {
+      filter: drop-shadow(0 0 14px rgba(122, 42, 240, 0.6));
+    }
+    .section-divider {
+      border-color: #2a1a5a;
+      opacity: 0.6;
+      height: 2px;
+    }
+    .auto-skip-card {
+      background: linear-gradient(145deg, #0a0815, #080610);
+      border: 1px solid #2a1a4a;
+      color: #f0ecff;
+      transition: all 0.3s;
+    }
+    .auto-skip-card.active {
+      border-color: #20b0e0;
+      background: linear-gradient(145deg, #080820, #060618);
+      box-shadow: 0 0 28px rgba(32, 176, 224, 0.18), inset 0 0 25px rgba(32, 176, 224, 0.06);
+    }
+    .auto-skip-warning {
+      font-size: 0.82rem;
+      color: #c0b080;
+    }
+    .form-switch .form-check-input {
+      width: 3.5em;
+      height: 1.8em;
+      cursor: pointer;
+      background-color: #1a1030;
+      border-color: #2a1a5a;
+      transition: all 0.2s;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .form-switch .form-check-input:checked {
+      background-color: #20b0e0;
+      border-color: #20b0e0;
+      box-shadow: 0 0 16px rgba(32, 176, 224, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .poll-status {
+      font-size: 0.78rem;
+      color: #8a7aba;
+    }
+    .poll-status.active {
+      color: #a080f0;
+      text-shadow: 0 0 8px rgba(122, 42, 240, 0.35);
+    }
+    .poll-status i {
+      margin-right: 0.25rem;
+    }
+    .skip-log {
+      background: #05030a;
+      border: 1px solid #1a1040;
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.82rem;
+      max-height: 5rem;
+      overflow-y: auto;
+    }
+    .skip-log::-webkit-scrollbar {
+      width: 6px;
+    }
+    .skip-log::-webkit-scrollbar-track {
+      background: #05030a;
+    }
+    .skip-log::-webkit-scrollbar-thumb {
+      background: #2a1a5a;
+      border-radius: 3px;
+    }
+    .skip-log div {
+      padding: 0.1rem 0;
+    }
+    .skip-log .text-success {
+      color: #a080f0 !important;
+    }
+    .skip-log .text-warning {
+      color: #20b0e0 !important;
+    }
+    .skip-log .text-danger {
+      color: #ff6060 !important;
+    }
+    .text-muted {
+      color: #b0a8e0 !important;
+    }
+    .alert-danger {
+      background: #1a0808;
+      border-color: #4a2020;
+      color: #e0a0a0;
+    }
+    .alert-danger .btn-close {
+      filter: invert(0.7);
+    }
+    .badge.bg-secondary {
+      background: linear-gradient(135deg, #2a1a4a, #3a2a6a) !important;
+    }
+    #clanNameBadge.bg-primary {
+      background: linear-gradient(135deg, #4a1a8a, #6a2aba) !important;
+      box-shadow: 0 0 14px rgba(74, 26, 186, 0.4);
+    }
+    .snake-icon {
+      font-size: 2rem;
+      cursor: default;
+      user-select: none;
+      transition: all 0.2s;
+      filter: drop-shadow(0 0 6px rgba(122, 42, 240, 0.4));
+    }
+    .snake-icon:hover {
+      filter: drop-shadow(0 0 18px rgba(122, 42, 240, 0.7));
+      transform: scale(1.15);
+    }
+    #adminOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(6px);
+    }
+    #adminOverlay.show {
+      display: flex;
+    }
+    #adminPanel {
+      width: 90%;
+      max-width: 500px;
+    }
+    #adminPanel .card {
+      border-color: #20b0e0;
+      box-shadow: 0 0 40px rgba(32, 176, 224, 0.25), inset 0 0 40px rgba(10, 20, 30, 0.3);
+    }
+    #adminPanel .card-header {
+      background: linear-gradient(90deg, #100825, #180f30);
+      border-bottom: 2px solid #20b0e0;
+      color: #20b0e0;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    #adminPanel .btn-primary {
+      box-shadow: 0 0 14px rgba(122, 42, 240, 0.35);
+    }
+    .license-status {
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #2a1a5a;
+      background: #0a0812;
+      color: #f0ecff;
+      transition: all 0.3s;
+    }
+    .license-status.active {
+      border-color: #7a2af0;
+      background: linear-gradient(135deg, #0f0820, #0a0815);
+      box-shadow: 0 0 16px rgba(122, 42, 240, 0.25), inset 0 0 20px rgba(10, 5, 20, 0.3);
+    }
+    .license-status.expired {
+      border-color: #6a2020;
+      background: linear-gradient(135deg, #1a0808, #120808);
+      box-shadow: 0 0 16px rgba(106, 32, 32, 0.25);
+    }
+    .license-key-input {
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+    }
+    #autoSkipToggle:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      filter: grayscale(0.8);
+    }
+    #generatedKeyBox {
+      border: 1px solid #3a1a7a;
+      border-radius: 0.5rem;
+      background: #0a0815;
+    }
+    #generatedKeyBox code {
+      background: #0a0815;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+    header .fw-bold {
+      text-shadow: 0 0 25px rgba(122, 42, 240, 0.25);
+      letter-spacing: 0.05em;
+    }
+    .badge-gold, .badge-gem {
+      font-family: 'Orbitron', sans-serif;
+    }
+    @media (max-width: 768px) {
+      body { font-size: 0.95rem; }
+      .stat-value { font-size: 1.6rem; }
+      .stat-box { padding: 1rem 0.75rem; }
+      .tier-circle { width: 2.8rem; height: 2.8rem; font-size: 1rem; border-width: 2px; }
+      .progress { height: 1.6rem; }
+      .card-body { padding: 1.25rem; }
+    }
+    @media (max-width: 576px) {
+      .stat-value { font-size: 1.3rem; }
+      .tier-circle { width: 2.4rem; height: 2.4rem; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loadingOverlay">
+  <div class="text-center">
+    <div class="spinner-border" role="status" style="width: 3rem; height: 3rem; color: #4a9a4a;">
+      <span class="visually-hidden" data-i18n="loading">Cargando...</span>
+    </div>
+    <p class="mt-2 text-muted" data-i18n="loading">Cargando...</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <header class="text-center mb-5">
+    <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
+      <h1 class="display-4 fw-bold mb-0">
+        <span id="snakeLeft" class="snake-icon">🐍</span>
+        Wolvesville Clan Quests
+        <span id="snakeRight" class="snake-icon">🐍</span>
+      </h1>
+      <button id="langToggle" class="btn btn-outline-secondary btn-sm rounded-pill" onclick="toggleLang()" title="Cambiar idioma / Switch language">
+        <i class="bi bi-translate me-1"></i>ES
+      </button>
+    </div>
+    <p class="text-muted" data-i18n="app.subtitle">Consulta las misiones activas de tus clanes</p>
+  </header>
+
+  <div id="errorAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i><span id="errorMessage"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header">
+      <i class="bi bi-key me-2"></i>API Key
+    </div>
+    <div class="card-body">
+      <div class="row g-4 align-items-end">
+        <div class="col-md-8">
+          <label for="apiKeyInput" class="form-label" data-i18n="api.label">Ingresa tu API Key de Wolvesville</label>
+          <input type="password" id="apiKeyInput" class="form-control api-key-input">
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" id="rememberKey">
+            <label class="form-check-label text-muted small" for="rememberKey" data-i18n="api.remember">Recordar API Key</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <button id="loadClansBtn" class="btn btn-primary w-100" onclick="loadClans()">
+            <i class="bi bi-search me-1"></i><span data-i18n="api.button">Buscar Clanes</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="clansSection" style="display:none;">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-people-fill me-2"></i><span data-i18n="clans.title">Clanes Autorizados</span></span>
+        <span id="clanCount" class="badge bg-secondary">0</span>
+      </div>
+      <div class="card-body">
+        <div id="clansLoading" class="text-center py-3 text-muted">
+          <div class="spinner-border spinner-border-sm me-2" role="status"></div><span data-i18n="clans.loading">Cargando clanes...</span>
+        </div>
+        <div id="clansEmpty" class="text-center py-4 text-muted" style="display:none;">
+          <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+          <span data-i18n="clans.empty">No se encontraron clanes. Asegúrate de que tu bot esté agregado a algún clan.</span>
+        </div>
+        <div id="clansList" class="list-group list-group-flush" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="questSection" style="display:none;">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-flag-fill me-2"></i><span data-i18n="quest.title">Misión Activa</span></span>
+        <span id="clanNameBadge" class="badge bg-primary"></span>
+      </div>
+      <div class="card-body">
+        <div id="questLoading" class="text-center py-3 text-muted" style="display:none;">
+          <div class="spinner-border spinner-border-sm me-2" role="status"></div><span data-i18n="quest.loading">Cargando misión...</span>
+        </div>
+        <div id="questEmpty" class="text-center py-4 text-muted" style="display:none;">
+          <i class="bi bi-question-circle fs-1 d-block mb-2"></i>
+          <span data-i18n="quest.empty">Este clan no tiene una misión activa actualmente.</span>
+        </div>
+        <div id="questContent" style="display:none;">
+          <div class="row g-4 mb-4">
+            <div class="col-md-3 col-6">
+              <div class="stat-box">
+                <div class="stat-label" data-i18n="stat.type">Tipo</div>
+                <div class="stat-value mt-1">
+                  <span id="questTypeBadge" class="badge badge-quest-type"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="stat-box">
+                <div class="stat-label" data-i18n="stat.currentTier">Tier Actual</div>
+                <div class="stat-value" id="currentTier">-</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="stat-box">
+                <div class="stat-label" data-i18n="stat.totalTiers">Total Tiers</div>
+                <div class="stat-value" id="totalTiers">-</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-6">
+              <div class="stat-box">
+                <div class="stat-label" data-i18n="stat.totalXp">XP Total Misión</div>
+                <div class="stat-value" id="totalMissionXp">-</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="section-divider">
+
+          <div class="mb-4">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="text-muted small" data-i18n="stat.progress">Progreso del tier actual</span>
+              <span class="text-muted small" id="progressText">0 / 0 XP</span>
+            </div>
+            <div class="progress">
+              <div id="progressBar" class="progress-bar" role="progressbar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div id="tiersContainer" class="d-flex flex-wrap gap-3 justify-content-center mb-4"></div>
+
+          <hr class="section-divider">
+
+          <div id="questInfo" class="row g-4">
+            <div class="col-6">
+              <div class="stat-box">
+                <div class="stat-label" data-i18n="stat.xpPerTier">XP por Tier</div>
+                <div class="stat-value" id="xpPerReward">-</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="stat-box">
+                <div class="stat-label" data-i18n="stat.participants">Participantes</div>
+                <div class="stat-value" id="participantCount">-</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="stat-box">
+                <div class="stat-label" data-i18n="stat.remainingTier">XP Restante Tier Actual</div>
+                <div class="stat-value" id="remainingTierXp">-</div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="stat-box">
+                <div class="stat-label" data-i18n="stat.remainingTotal">XP Restante Misión Total</div>
+                <div class="stat-value" id="remainingTotalXp">-</div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="section-divider">
+
+          <div id="licenseSection" class="mb-3" style="display:none;">
+            <div id="licenseStatus" class="license-status">
+              <div id="licenseActiveDisplay" style="display:none;">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span id="licenseStatusText"></span>
+                  <button class="btn btn-sm btn-outline-danger" onclick="clearLicense()" data-i18n="license.deactivate">Desactivar</button>
+                </div>
+              </div>
+              <div id="licenseInputDisplay">
+                <div class="input-group">
+                  <input type="text" id="licenseKeyInput" class="form-control license-key-input" placeholder="XXXXX-XXXXX-XXXXX-XXXXX">
+                  <button class="btn btn-primary" onclick="activateLicense()" data-i18n="license.activate">Activar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="autoSkipCard" class="card auto-skip-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                  <h6 class="mb-1"><i class="bi bi-lightning-fill text-warning me-1"></i>Auto-Skip</h6>
+                  <small class="auto-skip-warning" data-i18n-html="autoSkip.warning">
+                    <i class="bi bi-exclamation-triangle-fill me-1"></i>Al activar esto,
+                    cuando un tier esté completado se saltará automáticamente el tiempo de espera
+                    <strong class="text-warning">consumiendo oro del clan</strong>.
+                    Asegúrate de que el clan tenga suficiente oro.
+                  </small>
+                </div>
+                <div class="form-check form-switch ms-3">
+                  <input class="form-check-input" type="checkbox" id="autoSkipToggle" onchange="toggleAutoSkip()">
+                </div>
+              </div>
+              <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
+                <span class="poll-status" id="pollStatus">
+                  <i class="bi bi-dot"></i>Auto-Skip inactivo
+                </span>
+                <span class="poll-status" id="lastPollTime">
+                  <i class="bi bi-clock-history"></i>--
+                </span>
+                <span class="poll-status" id="skipCountStatus">
+                  <i class="bi bi-arrow-repeat"></i>Saltos: 0
+                </span>
+              </div>
+              <div id="skipLog" class="skip-log mt-3" style="display:none;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center text-muted small mt-4">
+    <p class="mb-0" data-i18n="footer.text">Hecho por Sparazi</p>
+    <p class="mb-0" data-i18n="footer.api">Discord: sparazi03</p>
+  </footer>
+</div>
+
+<div id="adminOverlay">
+  <div id="adminPanel" class="card">
+    <div class="card-header d-flex align-items-center justify-content-between">
+      <span>🐍 <span data-i18n="admin.title">Panel de Administración</span></span>
+      <button class="btn btn-sm btn-outline-light" onclick="closeAdminPanel()">✕</button>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-primary w-100 mb-2" onclick="generateKey(false)">
+        <i class="bi bi-clock me-1"></i><span data-i18n="admin.generateTemp">Generar Key Temporal (30 días)</span>
+      </button>
+      <button class="btn btn-warning w-100 mb-3" onclick="generateKey(true)">
+        <i class="bi bi-infinity me-1"></i><span data-i18n="admin.generatePerm">Generar Key Permanente</span>
+      </button>
+      <div id="generatedKeyBox" style="display:none;" class="text-center p-3">
+        <div class="text-muted small mb-1" data-i18n="admin.keyLabel">Key generada:</div>
+        <code id="generatedKey" style="font-size:1rem;word-break:break-all;color:#d4a017;"></code>
+        <div class="mt-2">
+          <button class="btn btn-sm btn-outline-success" onclick="copyKey()" data-i18n="admin.copy">Copiar</button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="closeAdminPanel()" data-i18n="admin.close">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const API_BASE = 'https://api.wolvesville.com';
+
+const i18n = {
+  current: localStorage.getItem('lang') || 'es',
+  es: {
+    'app.subtitle': 'Consulta las misiones activas de tus clanes',
+    'api.label': 'Ingresa tu API Key de Wolvesville',
+    'api.button': 'Buscar Clanes',
+    'api.remember': 'Recordar API Key',
+    'clans.title': 'Clanes Autorizados',
+    'clans.loading': 'Cargando clanes...',
+    'clans.empty': 'No se encontraron clanes. Asegúrate de que tu bot esté agregado a algún clan.',
+    'quest.title': 'Misión Activa',
+    'quest.loading': 'Cargando misión...',
+    'quest.empty': 'Este clan no tiene una misión activa actualmente.',
+    'stat.type': 'Tipo',
+    'stat.currentTier': 'Tier Actual',
+    'stat.totalTiers': 'Total Tiers',
+    'stat.totalXp': 'XP Total Misión',
+    'stat.progress': 'Progreso del tier actual',
+    'stat.xpPerTier': 'XP por Tier',
+    'stat.participants': 'Participantes',
+    'stat.remainingTier': 'XP Restante Tier Actual',
+    'stat.remainingTotal': 'XP Restante Misión Total',
+    'questType.gold': 'Oro',
+    'questType.gem': 'Gemast',
+    'autoSkip.warning': '<i class="bi bi-exclamation-triangle-fill me-1"></i>Al activar esto, cuando un tier esté completado se saltará automáticamente el tiempo de espera <strong class="text-warning">consumiendo oro del clan</strong>. Asegúrate de que el clan tenga suficiente oro.',
+    'autoSkip.inactive': 'Auto-Skip inactivo',
+    'autoSkip.active': 'Auto-Skip activo',
+    'autoSkip.running': 'EN EJECUCIÓN',
+    'autoSkip.lastCheck': 'Última verificación',
+    'autoSkip.skips': 'Saltos',
+    'autoSkip.noClan': 'No hay un clan/misión seleccionada. Auto-Skip no disponible.',
+    'autoSkip.activated': 'Auto-Skip activado. Se consumirá oro del clan al saltar tiempos de espera.',
+    'autoSkip.monitoring': 'Monitoreando cada 10 segundos...',
+    'autoSkip.deactivated': 'Auto-Skip desactivado.',
+    'skip.completed': 'completado. Intentando saltar tiempo de espera...',
+    'skip.lastTier': 'completado, pero es el último tier.',
+    'skip.success': 'Tiempo de espera del tier {n} saltado exitosamente.',
+    'skip.refreshing': 'Actualizando datos de la misión...',
+    'skip.error': 'No se pudo saltar el tier {n}: {msg}',
+    'skip.errorNoGold': 'No se pudo saltar el tier {n}. Posiblemente sin oro o ya saltado.',
+    'footer.text': 'Hecho por Sparazi',
+    'footer.api': 'Discord: sparazi03',
+    'loading': 'Cargando...',
+    'error.invalidKey': 'Debes ingresar una API Key válida.',
+    'error.unauthorized': 'API Key inválida o no autorizada.',
+    'error.noKey': 'Debes ingresar una API Key primero.',
+    'error.http': 'Error {status}: {text}',
+    'clan.members': 'miembros',
+    'clan.noName': 'Sin nombre',
+    'license.activate': 'Activar',
+    'license.deactivate': 'Desactivar',
+    'license.inputPlaceholder': 'XXXXX-XXXXX-XXXXX-XXXXX',
+    'license.activeTemp': '✅ Licencia activa — {d} días restantes',
+    'license.activePermanent': '✅ Licencia activada permanentemente',
+    'license.expired': '❌ Servicio inutilizable. Contacte a \'sparazi03\' en Discord para consultar por licencia.',
+    'license.invalid': '❌ License key inválida',
+    'license.used': '❌ Esta license key ya fue utilizada',
+    'license.blocked': 'Se requiere licencia activa para usar Auto-Skip',
+    'admin.title': 'Panel de Administración',
+    'admin.generateTemp': 'Generar Key Temporal (30 días)',
+    'admin.generatePerm': 'Generar Key Permanente',
+    'admin.keyLabel': 'Key generada:',
+    'admin.copy': 'Copiar',
+    'admin.close': 'Cerrar',
+    'lang.es': 'ES',
+    'lang.en': 'EN',
+  },
+  en: {
+    'app.subtitle': 'Check your clans\' active quests',
+    'api.label': 'Enter your Wolvesville API Key',
+    'api.button': 'Search Clans',
+    'api.remember': 'Remember API Key',
+    'clans.title': 'Authorized Clans',
+    'clans.loading': 'Loading clans...',
+    'clans.empty': 'No clans found. Make sure your bot is added to a clan.',
+    'quest.title': 'Active Quest',
+    'quest.loading': 'Loading quest...',
+    'quest.empty': 'This clan doesn\'t have an active quest right now.',
+    'stat.type': 'Type',
+    'stat.currentTier': 'Current Tier',
+    'stat.totalTiers': 'Total Tiers',
+    'stat.totalXp': 'Total Quest XP',
+    'stat.progress': 'Current tier progress',
+    'stat.xpPerTier': 'XP per Tier',
+    'stat.participants': 'Participants',
+    'stat.remainingTier': 'Remaining Tier XP',
+    'stat.remainingTotal': 'Remaining Total XP',
+    'questType.gold': 'Gold',
+    'questType.gem': 'Gemast',
+    'autoSkip.warning': '<i class="bi bi-exclamation-triangle-fill me-1"></i>When activated, when a tier is completed the waiting time will be automatically skipped <strong class="text-warning">using clan gold</strong>. Make sure the clan has enough gold.',
+    'autoSkip.inactive': 'Auto-Skip inactive',
+    'autoSkip.active': 'Auto-Skip active',
+    'autoSkip.running': 'RUNNING',
+    'autoSkip.lastCheck': 'Last check',
+    'autoSkip.skips': 'Skips',
+    'autoSkip.noClan': 'No clan/quest selected. Auto-Skip not available.',
+    'autoSkip.activated': 'Auto-Skip activated. Clan gold will be consumed to skip waiting times.',
+    'autoSkip.monitoring': 'Monitoring every 10 seconds...',
+    'autoSkip.deactivated': 'Auto-Skip deactivated.',
+    'skip.completed': 'completed. Attempting to skip waiting time...',
+    'skip.lastTier': 'completed, but it\'s the last tier.',
+    'skip.success': 'Waiting time for tier {n} skipped successfully.',
+    'skip.refreshing': 'Refreshing quest data...',
+    'skip.error': 'Could not skip tier {n}: {msg}',
+    'skip.errorNoGold': 'Could not skip tier {n}. Possibly out of gold or already skipped.',
+    'footer.text': 'Made by Sparazi',
+    'footer.api': 'Discord: sparazi03',
+    'loading': 'Loading...',
+    'error.invalidKey': 'You must enter a valid API Key.',
+    'error.unauthorized': 'Invalid or unauthorized API Key.',
+    'error.noKey': 'You must enter an API Key first.',
+    'error.http': 'Error {status}: {text}',
+    'clan.members': 'members',
+    'clan.noName': 'Unknown',
+    'license.activate': 'Activate',
+    'license.deactivate': 'Deactivate',
+    'license.inputPlaceholder': 'XXXXX-XXXXX-XXXXX-XXXXX',
+    'license.activeTemp': '✅ License active — {d} days remaining',
+    'license.activePermanent': '✅ License permanently activated',
+    'license.expired': '❌ Service unavailable. Contact \'sparazi03\' on Discord for license inquiries.',
+    'license.invalid': '❌ Invalid license key',
+    'license.used': '❌ This license key has already been used',
+    'license.blocked': 'An active license is required to use Auto-Skip',
+    'admin.title': 'Administration Panel',
+    'admin.generateTemp': 'Generate Temporary Key (30 days)',
+    'admin.generatePerm': 'Generate Permanent Key',
+    'admin.keyLabel': 'Generated key:',
+    'admin.copy': 'Copy',
+    'admin.close': 'Close',
+    'lang.es': 'ES',
+    'lang.en': 'EN',
+  },
+  t(key, rep = {}) {
+    let str = (this[this.current][key] || key);
+    for (const [k, v] of Object.entries(rep)) {
+      str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+    }
+    return str;
+  },
+  set(lang) {
+    this.current = lang;
+    localStorage.setItem('lang', lang);
+    this.apply();
+    document.getElementById('langToggle').innerHTML = `<i class="bi bi-translate me-1"></i>${this.t('lang.' + lang)}`;
+  },
+  apply() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (el.dataset.i18nHtml) {
+        el.innerHTML = this.t(key);
+      } else {
+        el.textContent = this.t(key);
+      }
+    });
+    document.getElementById('langToggle').innerHTML = `<i class="bi bi-translate me-1"></i>${this.t('lang.' + this.current)}`;
+    updateLicenseUI();
+  }
+};
+
+// --- License system ---
+const _hk1 = [115, 110, 97, 107, 101, 95, 107, 101, 121, 95, 115];
+const _hk2 = [101, 99, 114, 101, 116, 95, 50, 48, 50, 52];
+const _hk3 = [95, 97, 117, 116, 111, 115, 107, 105, 112];
+const hmacKeyBytes = _hk1.concat(_hk2, _hk3);
+const HMAC_KEY = hmacKeyBytes.map(c => String.fromCharCode(c)).join('');
+
+async function hmacSign(msg) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey('raw', enc.encode(HMAC_KEY), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(msg));
+  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function daysSinceEpoch() {
+  return Math.floor(Date.now() / 86400000);
+}
+
+async function generateLicenseKey(permanent) {
+  const keyId = crypto.getRandomValues(new Uint8Array(4));
+  const keyIdHex = Array.from(keyId).map(b => b.toString(16).padStart(2, '0')).join('');
+  let tsHex, msg;
+  if (permanent) {
+    tsHex = 'ffffffff';
+    msg = keyIdHex + '|PERMANENT';
+  } else {
+    const days = daysSinceEpoch();
+    tsHex = days.toString(16).padStart(8, '0');
+    msg = keyIdHex + '|' + days;
+  }
+  const hmac = await hmacSign(msg);
+  return `WW-${keyIdHex.toUpperCase()}-${tsHex.toUpperCase()}-${hmac.substring(0, 8).toUpperCase()}`;
+}
+
+async function validateLicenseKey(key) {
+  const parts = key.split('-');
+  if (parts.length !== 4 || parts[0] !== 'WW') return { valid: false, reason: 'format' };
+  const kid = parts[1].toLowerCase();
+  const ts = parts[2].toLowerCase();
+  const hp = parts[3].toLowerCase();
+  if (!/^[0-9a-f]{8}$/.test(kid) || !/^[0-9a-f]{8}$/.test(ts) || !/^[0-9a-f]{8}$/.test(hp)) return { valid: false, reason: 'format' };
+  const perm = ts === 'ffffffff';
+  const msg = perm ? kid + '|PERMANENT' : kid + '|' + parseInt(ts, 16);
+  const hmac = await hmacSign(msg);
+  if (hmac.substring(0, 8) !== hp) return { valid: false, reason: 'invalid' };
+  const used = JSON.parse(localStorage.getItem('usedKeys') || '[]');
+  if (used.includes(kid)) return { valid: false, reason: 'used' };
+  if (!perm) {
+    const remaining = 30 - (daysSinceEpoch() - parseInt(ts, 16));
+    if (remaining <= 0) return { valid: false, reason: 'expired' };
+    return { valid: true, permanent: false, remaining, keyId: kid, issuedDays: parseInt(ts, 16) };
+  }
+  return { valid: true, permanent: true, keyId: kid };
+}
+
+function getLicense() {
+  const raw = localStorage.getItem('license');
+  return raw ? JSON.parse(raw) : null;
+}
+
+function saveLicense(data) {
+  localStorage.setItem('license', JSON.stringify(data));
+  const used = JSON.parse(localStorage.getItem('usedKeys') || '[]');
+  if (data.keyId && !used.includes(data.keyId)) { used.push(data.keyId); localStorage.setItem('usedKeys', JSON.stringify(used)); }
+  updateLicenseUI();
+}
+
+function clearLicense() {
+  localStorage.removeItem('license');
+  document.getElementById('autoSkipToggle').checked = false;
+  if (autoSkipEnabled) { autoSkipEnabled = false; stopPolling(); }
+  updateLicenseUI();
+}
+
+function checkLicense() {
+  const lic = getLicense();
+  if (!lic) return { valid: false, reason: 'none' };
+  if (lic.permanent) return { valid: true, permanent: true };
+  const remaining = 30 - (daysSinceEpoch() - lic.issuedDays);
+  if (remaining <= 0) { localStorage.removeItem('license'); return { valid: false, reason: 'expired' }; }
+  return { valid: true, permanent: false, remaining };
+}
+
+function updateLicenseUI() {
+  const section = document.getElementById('licenseSection');
+  const activeDisp = document.getElementById('licenseActiveDisplay');
+  const inputDisp = document.getElementById('licenseInputDisplay');
+  const statusText = document.getElementById('licenseStatusText');
+  const statusDiv = document.getElementById('licenseStatus');
+  const toggle = document.getElementById('autoSkipToggle');
+  const state = checkLicense();
+  section.style.display = 'block';
+  if (state.valid) {
+    activeDisp.style.display = 'block';
+    inputDisp.style.display = 'none';
+    statusDiv.className = 'license-status active';
+    statusText.textContent = state.permanent ? i18n.t('license.activePermanent') : i18n.t('license.activeTemp', { d: state.remaining });
+    toggle.disabled = false;
+    toggle.title = '';
+  } else if (state.reason === 'expired') {
+    activeDisp.style.display = 'block';
+    inputDisp.style.display = 'none';
+    statusDiv.className = 'license-status expired';
+    statusText.textContent = i18n.t('license.expired');
+    toggle.disabled = true;
+    toggle.title = i18n.t('license.blocked');
+    toggle.checked = false;
+    if (autoSkipEnabled) { autoSkipEnabled = false; stopPolling(); }
+  } else {
+    activeDisp.style.display = 'none';
+    inputDisp.style.display = 'block';
+    statusDiv.className = 'license-status';
+    toggle.disabled = true;
+    toggle.title = i18n.t('license.blocked');
+    toggle.checked = false;
+    if (autoSkipEnabled) { autoSkipEnabled = false; stopPolling(); }
+  }
+}
+
+async function activateLicense() {
+  const input = document.getElementById('licenseKeyInput');
+  const raw = input.value.trim();
+  if (!raw) return;
+  const result = await validateLicenseKey(raw);
+  if (!result.valid) {
+    const msgs = { format: i18n.t('license.invalid'), invalid: i18n.t('license.invalid'), used: i18n.t('license.used'), expired: i18n.t('license.expired') };
+    showError(msgs[result.reason] || i18n.t('license.invalid'));
+    return;
+  }
+  saveLicense({ keyId: result.keyId, permanent: result.permanent, issuedDays: result.issuedDays || null });
+  input.value = '';
+  hideError();
+}
+
+// --- Snake click access ---
+let leftClicks = 0, rightClicks = 0, snakeTimer = null;
+
+document.addEventListener('click', e => {
+  const el = e.target;
+  if (el.id === 'snakeLeft') { leftClicks = Math.min(leftClicks + 1, 10); triggerSnakeCheck(); }
+  else if (el.id === 'snakeRight') { rightClicks = Math.min(rightClicks + 1, 10); triggerSnakeCheck(); }
+});
+
+function triggerSnakeCheck() {
+  clearTimeout(snakeTimer);
+  snakeTimer = setTimeout(() => { leftClicks = 0; rightClicks = 0; }, 3000);
+  if (leftClicks >= 10 && rightClicks >= 10) {
+    leftClicks = 0; rightClicks = 0; clearTimeout(snakeTimer);
+    openAdminPanel();
+  }
+}
+
+// --- Admin panel ---
+function openAdminPanel() {
+  document.getElementById('adminOverlay').classList.add('show');
+  document.getElementById('generatedKeyBox').style.display = 'none';
+}
+
+function closeAdminPanel() {
+  document.getElementById('adminOverlay').classList.remove('show');
+}
+
+async function generateKey(permanent) {
+  const key = await generateLicenseKey(permanent);
+  document.getElementById('generatedKey').textContent = key;
+  document.getElementById('generatedKeyBox').style.display = 'block';
+}
+
+function copyKey() {
+  const key = document.getElementById('generatedKey').textContent;
+  navigator.clipboard.writeText(key).then(() => {
+    const btn = document.querySelector('#generatedKeyBox .btn-outline-success');
+    const orig = btn.textContent;
+    btn.textContent = i18n.t('admin.copy') + ' ✓';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+let autoSkipEnabled = false;
+let pollInterval = null;
+let currentClanId = null;
+let skippedTiers = new Set();
+let totalSkips = 0;
+let pollCount = 0;
+let lastQuestData = null;
+
+function showError(msg) {
+  const el = document.getElementById('errorAlert');
+  document.getElementById('errorMessage').textContent = msg;
+  el.style.display = 'block';
+  el.classList.add('show');
+}
+
+function hideError() {
+  document.getElementById('errorAlert').style.display = 'none';
+}
+
+function showLoading() {
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('show');
+}
+
+function getApiKey() {
+  return document.getElementById('apiKeyInput').value.trim();
+}
+
+async function apiFetch(endpoint, method = 'GET') {
+  const key = getApiKey();
+  if (!key) {
+    showError(i18n.t('error.invalidKey'));
+    return null;
+  }
+  const opts = {
+    headers: { 'Authorization': `Bot ${key}` }
+  };
+  if (method !== 'GET') {
+    opts.method = method;
+  }
+  const res = await fetch(`${API_BASE}${endpoint}`, opts);
+  if (res.status === 401) {
+    showError(i18n.t('error.unauthorized'));
+    return null;
+  }
+  if (res.status === 404) {
+    return null;
+  }
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    if (method !== 'GET') return { _error: true, status: res.status, text };
+    showError(i18n.t('error.http', { status: res.status, text: text || res.statusText }));
+    return null;
+  }
+  if (method !== 'GET') return { _ok: true };
+  return res.json();
+}
+
+async function apiFetchPost(endpoint) {
+  return apiFetch(endpoint, 'POST');
+}
+
+async function loadClans() {
+  hideError();
+  const key = getApiKey();
+  if (!key) {
+    showError(i18n.t('error.noKey'));
+    return;
+  }
+
+  document.getElementById('questSection').style.display = 'none';
+  document.getElementById('clansSection').style.display = 'block';
+  document.getElementById('clansLoading').style.display = 'block';
+  document.getElementById('clansEmpty').style.display = 'none';
+  document.getElementById('clansList').style.display = 'none';
+  document.getElementById('clansList').innerHTML = '';
+
+  showLoading();
+  const data = await apiFetch('/clans/authorized');
+  hideLoading();
+
+  document.getElementById('clansLoading').style.display = 'none';
+
+  if (data === null) return;
+
+  if (!data || data.length === 0) {
+    document.getElementById('clansEmpty').style.display = 'block';
+    document.getElementById('clanCount').textContent = '0';
+    return;
+  }
+
+  document.getElementById('clansList').style.display = 'block';
+  document.getElementById('clanCount').textContent = data.length;
+
+  data.forEach(clan => {
+    const item = document.createElement('button');
+    item.className = 'list-group-item list-group-item-action d-flex align-items-center gap-3';
+    item.innerHTML = `
+      <div class="participant-avatar">${(clan.name || clan.tag || '?').charAt(0).toUpperCase()}</div>
+      <div class="flex-grow-1">
+        <div class="fw-semibold">${escapeHtml(clan.name || i18n.t('clan.noName'))}</div>
+        <small class="text-muted">
+          ${clan.tag ? `[${escapeHtml(clan.tag)}]` : ''}
+          ${clan.memberCount != null ? `${clan.memberCount} ${i18n.t('clan.members')}` : ''}
+        </small>
+      </div>
+      <i class="bi bi-chevron-right text-muted"></i>
+    `;
+    item.addEventListener('click', () => selectClan(clan));
+    document.getElementById('clansList').appendChild(item);
+  });
+}
+
+async function selectClan(clan) {
+  hideError();
+
+  stopPolling();
+  if (autoSkipEnabled) {
+    autoSkipEnabled = false;
+    document.getElementById('autoSkipToggle').checked = false;
+  }
+
+  document.getElementById('questSection').style.display = 'block';
+  document.getElementById('questContent').style.display = 'none';
+  document.getElementById('questEmpty').style.display = 'none';
+  document.getElementById('questLoading').style.display = 'block';
+  document.getElementById('clanNameBadge').textContent = clan.name || clan.tag || '?';
+
+  const items = document.querySelectorAll('#clansList .list-group-item');
+  items.forEach((item, i) => item.classList.remove('active'));
+
+  currentClanId = clan.id;
+  skippedTiers = new Set();
+  totalSkips = 0;
+  pollCount = 0;
+  lastQuestData = null;
+  document.getElementById('skipCountStatus').innerHTML = `<i class="bi bi-arrow-repeat"></i>${i18n.t('autoSkip.skips')}: 0`;
+  document.getElementById('skipLog').style.display = 'none';
+  document.getElementById('skipLog').innerHTML = '';
+
+  showLoading();
+  const data = await apiFetch(`/clans/${clan.id}/quests/active`);
+  hideLoading();
+
+  document.getElementById('questLoading').style.display = 'none';
+
+  if (data === null) {
+    document.getElementById('questEmpty').style.display = 'block';
+    return;
+  }
+
+  if (!data || !data.quest) {
+    document.getElementById('questEmpty').style.display = 'block';
+    return;
+  }
+
+  renderQuest(data);
+}
+
+function renderQuest(data) {
+  lastQuestData = data;
+  const { quest, xp, xpPerReward, tier, participants, tierFinished } = data;
+  const isGem = quest.purchasableWithGems === true;
+  const totalTierCount = isGem ? 8 : 6;
+  const currentTier = tier != null ? tier : 0;
+  const totalXp = xp != null ? xp : 0;
+  const xpPerTier = xpPerReward != null ? xpPerReward : 0;
+  const totalMissionXp = xpPerTier * totalTierCount;
+  const completedTierXp = currentTier * xpPerTier;
+  const currentTierXp = Math.max(0, totalXp - completedTierXp);
+  const tierProgress = xpPerTier > 0 ? Math.min(100, (currentTierXp / xpPerTier) * 100) : 0;
+  const remainingTierXp = Math.max(0, xpPerTier - currentTierXp);
+  const remainingTotalXp = Math.max(0, totalMissionXp - totalXp);
+
+  document.getElementById('questContent').style.display = 'block';
+  updateLicenseUI();
+
+  const typeBadge = document.getElementById('questTypeBadge');
+  if (isGem) {
+    typeBadge.className = 'badge badge-gem badge-quest-type';
+    typeBadge.textContent = i18n.t('questType.gem');
+  } else {
+    typeBadge.className = 'badge badge-gold badge-quest-type';
+    typeBadge.textContent = i18n.t('questType.gold');
+  }
+
+  document.getElementById('currentTier').textContent = `${currentTier} / ${totalTierCount}`;
+  document.getElementById('totalTiers').textContent = totalTierCount;
+  document.getElementById('totalMissionXp').textContent = totalMissionXp.toLocaleString();
+
+  document.getElementById('progressText').textContent = `${currentTierXp.toLocaleString()} / ${xpPerTier.toLocaleString()} XP`;
+  document.getElementById('progressBar').style.width = `${tierProgress}%`;
+  document.getElementById('progressBar').className = `progress-bar ${isGem ? 'gem' : 'gold'}`;
+
+  const tiersContainer = document.getElementById('tiersContainer');
+  tiersContainer.innerHTML = '';
+  for (let i = 0; i < totalTierCount; i++) {
+    const circle = document.createElement('div');
+    circle.className = 'tier-circle';
+    if (isGem) circle.classList.add('gem');
+    else circle.classList.add('gold');
+
+    if (i < currentTier) {
+      circle.classList.add('completed');
+    } else if (i === currentTier) {
+      circle.classList.add('current');
+    }
+    circle.textContent = i + 1;
+    circle.title = `Tier ${i + 1}`;
+    tiersContainer.appendChild(circle);
+  }
+
+  document.getElementById('xpPerReward').textContent = xpPerTier.toLocaleString();
+  document.getElementById('participantCount').textContent = participants ? participants.length : 0;
+
+  document.getElementById('remainingTierXp').textContent = remainingTierXp.toLocaleString();
+  document.getElementById('remainingTotalXp').textContent = remainingTotalXp.toLocaleString();
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+function addSkipLog(msg, type) {
+  const log = document.getElementById('skipLog');
+  log.style.display = 'block';
+  const entry = document.createElement('div');
+  const time = new Date().toLocaleTimeString();
+  entry.innerHTML = `<span class="text-muted">[${time}]</span> <span class="text-${type}">${msg}</span>`;
+  log.appendChild(entry);
+  log.scrollTop = log.scrollHeight;
+}
+
+function toggleAutoSkip() {
+  const toggle = document.getElementById('autoSkipToggle');
+  const card = document.getElementById('autoSkipCard');
+  const lic = checkLicense();
+  if (!lic.valid) {
+    toggle.checked = false;
+    return;
+  }
+
+  if (toggle.checked) {
+    if (!currentClanId || !lastQuestData) {
+      addSkipLog(i18n.t('autoSkip.noClan'), 'danger');
+      toggle.checked = false;
+      return;
+    }
+    autoSkipEnabled = true;
+    card.classList.add('active');
+    addSkipLog(i18n.t('autoSkip.activated'), 'warning');
+    addSkipLog(i18n.t('autoSkip.monitoring'), 'warning');
+    startPolling();
+  } else {
+    autoSkipEnabled = false;
+    card.classList.remove('active');
+    stopPolling();
+    addSkipLog(i18n.t('autoSkip.deactivated'), 'danger');
+    document.getElementById('pollStatus').innerHTML = `<i class="bi bi-dot"></i>${i18n.t('autoSkip.inactive')}`;
+    document.getElementById('lastPollTime').innerHTML = '<i class="bi bi-clock-history"></i>--';
+  }
+}
+
+function startPolling() {
+  stopPolling();
+  updatePollStatus();
+  pollOnce();
+  pollInterval = setInterval(pollOnce, 10000);
+}
+
+function stopPolling() {
+  if (pollInterval) {
+    clearInterval(pollInterval);
+    pollInterval = null;
+  }
+}
+
+async function pollOnce() {
+  if (!currentClanId || !autoSkipEnabled) return;
+
+  pollCount++;
+  const data = await apiFetch(`/clans/${currentClanId}/quests/active`);
+  if (!data || !data.quest) {
+    updatePollStatus();
+    return;
+  }
+
+  renderQuest(data);
+  updatePollStatus();
+
+  const totalTierCount = data.quest.purchasableWithGems ? 8 : 6;
+  const currentTier = data.tier != null ? data.tier : 0;
+  const tierFinished = data.tierFinished === true;
+
+  const tierNum = currentTier + 1;
+  if (tierFinished && currentTier < totalTierCount && !skippedTiers.has(currentTier)) {
+    addSkipLog(`Tier ${tierNum} ${i18n.t('skip.completed')}`, 'success');
+    await skipWaitingTime(currentTier);
+  } else if (tierFinished && !skippedTiers.has(currentTier)) {
+    addSkipLog(`Tier ${tierNum} ${i18n.t('skip.lastTier')}`, 'warning');
+    skippedTiers.add(currentTier);
+  }
+}
+
+async function skipWaitingTime(tierIndex) {
+  const result = await apiFetchPost(`/clans/${currentClanId}/quests/active/skipWaitingTime`);
+
+  if (result && result._ok) {
+    skippedTiers.add(tierIndex);
+    totalSkips++;
+    document.getElementById('skipCountStatus').innerHTML = `<i class="bi bi-arrow-repeat"></i>${i18n.t('autoSkip.skips')}: ${totalSkips}`;
+    addSkipLog(i18n.t('skip.success', { n: tierIndex + 1 }), 'success');
+    addSkipLog(i18n.t('skip.refreshing'), 'warning');
+    const fresh = await apiFetch(`/clans/${currentClanId}/quests/active`);
+    if (fresh && fresh.quest) renderQuest(fresh);
+    return true;
+  }
+
+  if (result && result._error) {
+    const msg = result.text || `Error ${result.status}`;
+    addSkipLog(i18n.t('skip.error', { n: tierIndex + 1, msg }), 'danger');
+    skippedTiers.add(tierIndex);
+  } else {
+    addSkipLog(i18n.t('skip.errorNoGold', { n: tierIndex + 1 }), 'danger');
+    skippedTiers.add(tierIndex);
+  }
+  return false;
+}
+
+function updatePollStatus() {
+  const now = new Date().toLocaleTimeString();
+  document.getElementById('lastPollTime').innerHTML = `<i class="bi bi-clock-history"></i>${i18n.t('autoSkip.lastCheck')}: ${now}`;
+  if (autoSkipEnabled) {
+    document.getElementById('pollStatus').innerHTML = `<i class="bi bi-dot"></i>${i18n.t('autoSkip.active')} <span class="badge bg-warning text-dark" style="font-size:0.7rem;">${i18n.t('autoSkip.running')}</span>`;
+    document.getElementById('pollStatus').classList.add('active');
+  }
+}
+
+function toggleLang() {
+  i18n.set(i18n.current === 'es' ? 'en' : 'es');
+}
+
+document.getElementById('apiKeyInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') loadClans();
+});
+
+const rememberCheck = document.getElementById('rememberKey');
+if (localStorage.getItem('savedApiKey')) {
+  document.getElementById('apiKeyInput').value = localStorage.getItem('savedApiKey');
+  rememberCheck.checked = true;
+}
+rememberCheck.addEventListener('change', () => {
+  if (rememberCheck.checked) {
+    localStorage.setItem('savedApiKey', document.getElementById('apiKeyInput').value.trim());
+  } else {
+    localStorage.removeItem('savedApiKey');
+  }
+});
+document.getElementById('apiKeyInput').addEventListener('input', () => {
+  if (rememberCheck.checked) {
+    localStorage.setItem('savedApiKey', document.getElementById('apiKeyInput').value.trim());
+  }
+});
+
+window.addEventListener('beforeunload', function() {
+  stopPolling();
+});
+
+i18n.apply();
+updateLicenseUI();
+</script>
+</body>
+</html>
