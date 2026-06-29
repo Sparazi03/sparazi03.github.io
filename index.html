@@ -168,61 +168,62 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <hr class="section-divider">
+        <hr class="section-divider">
 
-          <div id="licenseSection" class="mb-3" style="display:none;">
-            <div id="licenseStatus" class="license-status">
-              <div id="licenseActiveDisplay" style="display:none;">
-                <div class="d-flex align-items-center justify-content-between">
-                  <span id="licenseStatusText"></span>
-                  <button class="btn btn-sm btn-outline-danger" onclick="showClearModal()" data-i18n="license.deactivate">Desactivar</button>
-                </div>
-              </div>
-              <div id="licenseInputDisplay">
-                <div class="input-group">
-                  <input type="text" id="licenseKeyInput" class="form-control license-key-input" placeholder="XXXXX-XXXXX-XXXXX-XXXXX">
-                  <button class="btn btn-primary" onclick="activateLicense()" data-i18n="license.activate">Activar</button>
-                </div>
-              </div>
-            </div>
-          </div>
+      </div>
+    </div>
+  </div>
 
-          <div id="autoSkipCard" class="card auto-skip-card">
-            <div class="card-body">
-              <div class="d-flex align-items-center justify-content-between mb-3">
-                <div>
-                  <h6 class="mb-1"><i class="bi bi-lightning-fill text-warning me-1"></i>Auto-Skip</h6>
-                  <small class="auto-skip-warning" data-i18n="autoSkip.warning" data-i18n-html="autoSkip.warning">
-                    <i class="bi bi-exclamation-triangle-fill me-1"></i>Al activar esto,
-                    cuando un tier esté completado se saltará automáticamente el tiempo de espera
-                    <strong class="text-warning">consumiendo oro del clan</strong>.
-                    Asegúrate de que el clan tenga suficiente oro.
-                  </small>
-                </div>
-                <div class="form-check form-switch ms-3">
-                  <input class="form-check-input" type="checkbox" id="autoSkipToggle" onchange="toggleAutoSkip()">
-                </div>
-              </div>
-              <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
-                <span class="poll-status" id="pollStatus">
-                  <i class="bi bi-dot"></i>Auto-Skip inactivo
-                </span>
-                <span class="poll-status" id="lastPollTime">
-                  <i class="bi bi-clock-history"></i>--
-                </span>
-                <span class="poll-status" id="skipCountStatus">
-                  <i class="bi bi-arrow-repeat"></i>Saltos: 0
-                </span>
-              </div>
-              <div id="noMissionNotice" class="poll-status" style="display:none;">
-                <i class="bi bi-info-circle me-1"></i><span data-i18n="autoSkip.noMission">No hay misión activa actualmente — el auto-skip se reanudará automáticamente cuando aparezca una nueva.</span>
-              </div>
-              <div id="skipLog" class="skip-log mt-3" style="display:none;"></div>
-            </div>
-          </div>
+  <div id="licenseSection" class="mb-3" style="display:none;">
+    <div id="licenseStatus" class="license-status">
+      <div id="licenseActiveDisplay" style="display:none;">
+        <div class="d-flex align-items-center justify-content-between">
+          <span id="licenseStatusText"></span>
+          <button class="btn btn-sm btn-outline-danger" onclick="showClearModal()" data-i18n="license.deactivate">Desactivar</button>
         </div>
       </div>
+      <div id="licenseInputDisplay">
+        <div class="input-group">
+          <input type="text" id="licenseKeyInput" class="form-control license-key-input" placeholder="XXXXX-XXXXX-XXXXX-XXXXX">
+          <button class="btn btn-primary" onclick="activateLicense()" data-i18n="license.activate">Activar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="autoSkipCard" class="card auto-skip-card">
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+          <h6 class="mb-1"><i class="bi bi-lightning-fill text-warning me-1"></i>Auto-Skip</h6>
+          <small class="auto-skip-warning" data-i18n="autoSkip.warning" data-i18n-html="autoSkip.warning">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i>Al activar esto,
+            cuando un tier esté completado se saltará automáticamente el tiempo de espera
+            <strong class="text-warning">consumiendo oro del clan</strong>.
+            Asegúrate de que el clan tenga suficiente oro.
+          </small>
+        </div>
+        <div class="form-check form-switch ms-3">
+          <input class="form-check-input" type="checkbox" id="autoSkipToggle" onchange="toggleAutoSkip()">
+        </div>
+      </div>
+      <div class="d-flex flex-wrap align-items-center gap-3 mt-3">
+        <span class="poll-status" id="pollStatus">
+          <i class="bi bi-dot"></i>Auto-Skip inactivo
+        </span>
+        <span class="poll-status" id="lastPollTime">
+          <i class="bi bi-clock-history"></i>--
+        </span>
+        <span class="poll-status" id="skipCountStatus">
+          <i class="bi bi-arrow-repeat"></i>Saltos: 0
+        </span>
+      </div>
+      <div id="noMissionNotice" class="poll-status" style="display:none;">
+        <i class="bi bi-info-circle me-1"></i><span data-i18n="autoSkip.noMission">No hay misión activa actualmente — el auto-skip se reanudará automáticamente cuando aparezca una nueva.</span>
+      </div>
+      <div id="skipLog" class="skip-log mt-3" style="display:none;"></div>
     </div>
   </div>
 
@@ -274,6 +275,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="app.min.js"></script>
+<script src="app.min.js?v=1.0.0"></script>
 </body>
 </html>
