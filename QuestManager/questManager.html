@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clan Quests Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="app-title-row">
+                <h1>Clan Quests Management</h1>
+            </div>
+        </header>
+        <section class="app-header">
+            <div>
+                <h2>What is does? / How to use it?</h2>
+            </div>
+            <div class="list-div">
+                <ul class="list">
+                    <li>Enter your API key.</li>
+                    <li>Click "Load Clans" to get started.</li>
+                    <li>Select your clan.</li>
+                    <li>Click "Enable Voters" to enable quest participation for all clan members who voted for that quest.</li>
+                    <li>Select a quest & start it.</li>
+                </ul>
+            </div>
+
+        </section>
+
+        <section class="app-header">
+            <form class="api-form" id="apiForm" onsubmit="return false;">
+                <div class="field">
+                    <h2>API Key</h2>
+                    <input type="password" id="apiKey" placeholder="Enter your bot API key" autocomplete="off">
+                </div>
+                <button type="button" class="btn-primary" id="loadClansBtn">Load Clans</button>
+            </form>
+        </section>
+
+        <section class="panel" id="clansPanel">
+            <h2>Your Clans</h2>
+            <p class="subtitle">Clans where your bot has been added</p>
+            <div id="clansContainer">
+                <div class="empty-message">Enter your API key and click "Load Clans" to get started.</div>
+            </div>
+        </section>
+
+        <section class="panel hidden" id="controlsPanel">
+            <h2>Actions</h2>
+            <p class="subtitle" id="clanSubtitle"></p>
+            <div class="controls-bar">
+                <button class="btn-primary" id="startQuestBtn" disabled>Select a quest to start</button>
+                <button class="btn-danger" id="disableAllBtn">Disable Participation (All Members)</button>
+                <button class="btn-neutral" id="refreshBtn">Refresh Data</button>
+            </div>
+        </section>
+
+        <section class="panel hidden" id="questsPanel">
+            <h2>Available Quests</h2>
+            <p class="subtitle">Click a quest card to select it, then use the actions above</p>
+            <div id="questsContainer"></div>
+        </section>
+
+        <section class="panel hidden" id="membersPanel">
+            <h2>Clan Members</h2>
+            <p class="subtitle">Enable or disable quest participation member by member</p>
+            <div class="members-toolbar">
+                <button class="btn-soft" id="toggleEnabledListBtn">Show Enabled Members</button>
+            </div>
+            <div class="enabled-list hidden" id="enabledList">
+                <h3 id="enabledListTitle">Currently Enabled Members</h3>
+                <div class="enabled-chips" id="enabledChips"></div>
+            </div>
+            <div class="member-list" id="membersContainer"></div>
+            <p class="status-note" id="membersNote"></p>
+        </section>
+
+    </div>
+    <footer class="footer">
+        <p class="mb-0" data-i18n="footer.text">Made by Sparazi</p>
+        <p class="mb-0" data-i18n="footer.api">Discord: sparazi03</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

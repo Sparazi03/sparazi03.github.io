@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolvesville Skin Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>WOV Skin Code Finder</h1>
+    </header>
+
+    <main>
+        <!-- Sección de Configuración de API -->
+        <section id="config-section">
+            <h2>API Key :</h2>
+            <div class="input-group">
+                <div >
+                    <input type="password" id="api-key" placeholder="Paste your API Key...">
+                </div>
+                <button id="save-key-btn">Save</button>
+                <button id="clear-key-btn">Clear</button>
+            </div>
+            <p id="key-status" class="status-msg"></p>
+        </section>
+
+        <!-- Sección de Búsqueda de Jugador -->
+        <section id="search-section">
+            <h2>Search Player</h2>
+            <div class="input-group">
+                <div>
+                    <label for="nickname">Username</label>
+                    <input type="text" id="nickname" placeholder="Introduce the exact username...">
+                </div>
+                <button id="search-btn">Find Skin Codes</button>
+            </div>
+            <p id="search-status" class="status-msg"></p>
+            
+            <!-- Barra de carga -->
+            <div id="loading-container">
+                <div class="loading-label">
+                    <span class="loading-title">
+                        <span class="loading-spinner"></span>
+                        Loading skin codes...
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Resultados -->
+        <section id="results-section" style="display:none;">
+            <h2>Skins found</h2>
+            <div id="player-info"></div>
+            <div id="skins-grid"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p class="mb-0" data-i18n="footer.text">Made by Sparazi</p>
+        <p class="mb-0" data-i18n="footer.api">Discord: sparazi03</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
